@@ -24,7 +24,7 @@ app.use(mongoSanitize());
 app.use(xss());
 app.use(hpp());
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    origin: process.env.CLIENT_URL || 'https://portfolio-full-stack-lovat.vercel.app/',
     credentials: true
 }));
 
