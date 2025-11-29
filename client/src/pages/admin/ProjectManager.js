@@ -164,7 +164,14 @@ const ProjectManager = () => {
 
   return (
     <Container maxWidth="lg">
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
+      <Box sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        mb: 3,
+        flexDirection: { xs: 'column', sm: 'row' },
+        gap: { xs: 2, sm: 0 }
+      }}>
         <Typography variant="h4" component="h1">
           Project Management
         </Typography>
