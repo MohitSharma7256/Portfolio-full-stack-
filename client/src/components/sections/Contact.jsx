@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useAuth } from "../../context/AuthContext";
 import API from "../../api/axios";
-import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 
 const Container = styled.div`
@@ -136,8 +134,6 @@ const InfoMessage = styled.div`
 `;
 
 const Contact = () => {
-  const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -160,12 +156,6 @@ const Contact = () => {
     setError('');
     setSuccess(false);
 
-    if (!isAuthenticated) {
-      setError('You must be logged in to send a message.');
-      setTimeout(() => navigate('/login'), 2000);
-      return;
-    }
-
     mutation.mutate({
       subject,
       body: message
@@ -183,11 +173,6 @@ const Contact = () => {
         >
           Feel free to reach out to me for any questions or opportunities!
         </Desc>
-        {!isAuthenticated && (
-          <InfoMessage>
-            Please <a href="/login" style={{ color: '#667eea' }}>login</a> to send a message.
-          </InfoMessage>
-        )}
         <ContactForm onSubmit={handelSubmit}>
           <ContactTitle>Email Me 🚀</ContactTitle>
           <ContactInput
@@ -207,7 +192,7 @@ const Contact = () => {
           />
           {error && <ErrorMessage>{error}</ErrorMessage>}
           {success && <SuccessMessage>Message sent successfully!</SuccessMessage>}
-          <ContactButton type="submit" disabled={mutation.isLoading || !isAuthenticated}>
+          <ContactButton type="submit" disabled={mutation.isLoading}>
             {mutation.isLoading ? 'Sending...' : 'Send'}
           </ContactButton>
         </ContactForm>

@@ -186,19 +186,33 @@ const Navbar = () => {
             >
               Github Profile
             </GithubButton>
-            {isAuthenticated && (
+            {isAuthenticated && isAdmin ? (
               <GithubButton
                 as="button"
                 onClick={() => {
                   setIsOpen(!isOpen);
-                  isAdmin ? navigate("/admin") : logout();
+                  navigate("/admin");
                 }}
                 style={{
                   background: theme.primary,
                   color: theme.text_primary,
                 }}
               >
-                {isAdmin ? "Admin" : "Logout"}
+                Admin Dashboard
+              </GithubButton>
+            ) : (
+              <GithubButton
+                as="button"
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                  navigate("/login");
+                }}
+                style={{
+                  background: theme.primary,
+                  color: theme.text_primary,
+                }}
+              >
+                Admin Login
               </GithubButton>
             )}
           </MobileMenu>
@@ -208,13 +222,21 @@ const Navbar = () => {
           <GithubButton href={githubProfile?.url || "#"} target="_Blank">
             Github Profile
           </GithubButton>
-          {isAuthenticated && (
+          {isAuthenticated && isAdmin ? (
             <GithubButton
               as="button"
-              onClick={isAdmin ? () => navigate("/admin") : logout}
+              onClick={() => navigate("/admin")}
               style={{ marginLeft: "12px" }}
             >
-              {isAdmin ? "Admin" : "Logout"}
+              Admin Dashboard
+            </GithubButton>
+          ) : (
+            <GithubButton
+              as="button"
+              onClick={() => navigate("/login")}
+              style={{ marginLeft: "12px" }}
+            >
+              Admin Login
             </GithubButton>
           )}
         </ButtonContainer>

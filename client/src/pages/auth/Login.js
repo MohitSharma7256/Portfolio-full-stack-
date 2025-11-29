@@ -111,7 +111,7 @@ const Login = () => {
     return (
         <Container>
             <FormWrapper>
-                <Title>Login</Title>
+                <Title>Admin Login</Title>
                 <Form onSubmit={handleSubmit}>
                     <Input
                         type="email"
