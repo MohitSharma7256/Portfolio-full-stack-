@@ -79,30 +79,38 @@ const Projects = () => {
   const { data: projects = [], isLoading } = useProjectsQuery();
 
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2500,
+    arrows: true,
     responsive: [
       {
         breakpoint: 1200,
         settings: {
           slidesToShow: 3,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 900,
         settings: {
           slidesToShow: 2,
+          slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 768,
+        breakpoint: 600,
         settings: {
           slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+          arrows: true,
+          centerMode: true,
+          centerPadding: '20px',
         },
       },
     ],
