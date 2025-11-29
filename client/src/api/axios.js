@@ -29,7 +29,7 @@ API.interceptors.response.use(
             originalRequest._retry = true;
 
             try {
-                const { data } = await axios.get('http://localhost:5000/api/auth/refresh', {
+                const { data } = await axios.get(`${API.defaults.baseURL}/auth/refresh`, {
                     withCredentials: true
                 });
 
