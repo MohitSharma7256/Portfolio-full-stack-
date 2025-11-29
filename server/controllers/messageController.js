@@ -4,23 +4,39 @@ const { sendMail } = require('../utils/emailService');
 
 // @desc    Send a message
 // @route   POST /api/messages
-// @access  Private
+// @access  Public
 const sendMessage = asyncHandler(async (req, res) => {
-    const { subject, body } = req.body;
+    const { subject, body, name, email } = req.body;
 
-    const message = await Message.create({
-        sender: req.user._id,
-        name: req.user.name,
-        email: req.user.email,
+    // Use authenticated user data if available, otherwise use provided data
+    const messageData = {
+        sender: req.user?._id || null,
+        name: req.user?.name || name,
+        email: req.user?.email || email,
         subject,
         body
-    });
+    };
 
-    await sendMail({
-        to: process.env.CONTACT_EMAIL || process.env.EMAIL_FROM || req.user.email,
-        subject: `New portfolio message: ${subject}`,
-        text: `${req.user.name} (${req.user.email}) says:\n\n${body}`
-    });
+    // Validate required fields for unauthenticated users
+    if (!messageData.name || !messageData.email) {
+        return res.status(400).json({
+            message: 'Name and email are required'
+        });
+    }
+
+    const message = await Message.create(messageData);
+
+    // Send email notification
+    try {
+        await sendMail({
+            to: process.env.CONTACT_EMAIL || process.env.EMAIL_FROM,
+            subject: `New portfolio message: ${subject}`,
+            text: `${messageData.name} (${messageData.email}) says:\n\n${body}`
+        });
+    } catch (error) {
+        console.error('Failed to send email notification:', error);
+        // Don't fail the request if email fails
+    }
 
     res.status(201).json(message);
 });

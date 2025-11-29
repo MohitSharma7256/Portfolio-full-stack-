@@ -134,6 +134,8 @@ const InfoMessage = styled.div`
 `;
 
 const Contact = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -143,6 +145,8 @@ const Contact = () => {
     mutationFn: (payload) => API.post('/messages', payload),
     onSuccess: () => {
       setSuccess(true);
+      setName('');
+      setEmail('');
       setSubject('');
       setMessage('');
     },
@@ -157,6 +161,8 @@ const Contact = () => {
     setSuccess(false);
 
     mutation.mutate({
+      name,
+      email,
       subject,
       body: message
     });
@@ -175,6 +181,21 @@ const Contact = () => {
         </Desc>
         <ContactForm onSubmit={handelSubmit}>
           <ContactTitle>Email Me 🚀</ContactTitle>
+          <ContactInput
+            placeholder="Your Name"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <ContactInput
+            placeholder="Your Email"
+            name="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
           <ContactInput
             placeholder="Subject"
             name="subject"
