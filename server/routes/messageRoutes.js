@@ -17,7 +17,7 @@ const messageLimiter = rateLimit({
 });
 
 router.route('/')
-    .post(protect, messageLimiter, sendMessage)
+    .post(messageLimiter, sendMessage)
     .get(protect, admin, getMessages);
 
 router.route('/:id')
