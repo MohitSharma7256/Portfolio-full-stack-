@@ -186,6 +186,21 @@ const Navbar = () => {
             >
               Github Profile
             </GithubButton>
+            {isAuthenticated && (
+              <GithubButton
+                as="button"
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                  isAdmin ? navigate("/admin") : logout();
+                }}
+                style={{
+                  background: theme.primary,
+                  color: theme.text_primary,
+                }}
+              >
+                {isAdmin ? "Admin" : "Logout"}
+              </GithubButton>
+            )}
           </MobileMenu>
         )}
 

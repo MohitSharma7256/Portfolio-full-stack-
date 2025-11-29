@@ -100,7 +100,7 @@ const Projects = () => {
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 768,
         settings: {
           slidesToShow: 1,
         },
@@ -124,9 +124,11 @@ const Projects = () => {
         ) : (
           <Slider {...settings} style={{ width: "100%" }}>
             {projects.map((project) => (
-              <ProjectCardWrapper key={project._id}>
-                <ProjectCard project={project} />
-              </ProjectCardWrapper>
+              <div key={project._id} style={{ padding: "10px" }}>
+                <ProjectCardWrapper>
+                  <ProjectCard project={project} />
+                </ProjectCardWrapper>
+              </div>
             ))}
           </Slider>
         )}
